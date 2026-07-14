@@ -1,0 +1,25 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-4xl mx-auto p-6">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">My Notes App</h1>
+      <p class="text-gray-600">Buat, edit, dan kelola catatan kamu dengan mudah</p>
+    </header>
+
+    <app-note-form
+      [editingNote]="editingNote"
+      (onSubmit)="handleAddNote($event)"
+      (onCancel)="handleCancelEdit()"
+    ></app-note-form>
+
+    <app-search-bar
+      [value]="searchTerm"
+      (onChange)="searchTerm = $event"
+    ></app-search-bar>
+
+    <app-notes-list
+      [notes]="filteredNotes"
+      (onDelete)="handleDeleteNote($event)"
+      (onEdit)="handleEditNote($event)"
+    ></app-notes-list>
+  </div>
+</div>
