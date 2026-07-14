@@ -31,6 +31,33 @@ export class AppComponent implements OnInit {
   editingNote: Note | null = null;
 
   ngOnInit(): void {
+    const dummyNotes: Note[]=[
+      {
+        id: 1,
+        title:'WORLD CUP FINAL',
+        content:'SPAIN VS ARGENTINA',
+        createdAt:new Date().toISOString()
+      },
+      {
+        id: 2,
+        title:'GOAT OF FOOTBALL',
+        content:'LIONEL ANDREAS MESSI',
+        createdAt:new Date().toISOString()
+      },
+      {
+        id: 3,
+        title:'GOLDEN BOOT WORLD CUP',
+        content:'LIONEL MESSI ',
+        createdAt:new Date().toISOString()
+      },
+      {
+        id:4,
+        title:'GOLDEN BALL WORLD CUP',
+        content:'LIONEL MESSI',
+        createdAt:new Date().toISOString()
+      },
+    ];
+    this.notes=dummyNotes;
     // TODO: Implement loadNotesFromStorage
     // Load notes dari localStorage saat component mount
     // Key: 'notes'
