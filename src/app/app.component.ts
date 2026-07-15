@@ -87,6 +87,7 @@ export class AppComponent implements OnInit {
   }
 
   handleDeleteNote(id: number): void {
+    this.notes=this.notes.filter(note=>note.id!==id)
     // TODO: Implement delete note
     // 1. Filter notes array
     // 2. Remove note dengan id yang match
