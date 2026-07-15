@@ -72,6 +72,13 @@ export class AppComponent implements OnInit {
   }
 
   handleAddNote(formData: { title: string; content: string }): void {
+    const newNote: Note={
+      id: Date.now(),
+      title:formData.title,
+      content:formData.content,
+      createdAt:new Date().toISOString()
+    }
+    this.notes=[newNote,...this.notes]
     // TODO: Implement add note
     // 1. Create new note object dengan id unik, title, content, createdAt
     // 2. Add ke notes array
