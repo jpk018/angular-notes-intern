@@ -72,6 +72,12 @@ export class AppComponent implements OnInit {
   }
 
   handleAddNote(formData: { title: string; content: string }): void {
+    if (this.editingNote){
+      this.notes=this.notes.map(note=>this.editingNote!.id===note.id?
+      {...note,title:formData.title,content:formData.content}
+      : note) 
+    }
+    else{
     const newNote: Note={
       id: Date.now(),
       title:formData.title,
@@ -84,7 +90,9 @@ export class AppComponent implements OnInit {
     // 2. Add ke notes array
     // 3. Clear editingNote jika ada
     console.log('Add note:', formData);
-  }
+    }
+    this.editingNote = null;
+}
 
   handleDeleteNote(id: number): void {
     this.notes=this.notes.filter(note=>note.id!==id)
