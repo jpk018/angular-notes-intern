@@ -31,6 +31,15 @@ export class AppComponent implements OnInit {
   editingNote: Note | null = null;
 
   ngOnInit(): void {
+ const savedNotes = localStorage.getItem('notes');
+ if (savedNotes) {
+   try {
+     this.notes = JSON.parse(savedNotes);
+   } catch (error) {
+     console.error('Error loading notes:', error);
+   }
+ }
+ else{
     const dummyNotes: Note[]=[
       {
         id: 1,
@@ -61,7 +70,7 @@ export class AppComponent implements OnInit {
     // TODO: Implement loadNotesFromStorage
     // Load notes dari localStorage saat component mount
     // Key: 'notes'
-  }
+  }}
 
   get filteredNotes(): Note[] {
     return this.notes.filter(
@@ -92,6 +101,7 @@ export class AppComponent implements OnInit {
     console.log('Add note:', formData);
     }
     this.editingNote = null;
+    this.saveToStorage();
 }
 
   handleDeleteNote(id: number): void {
@@ -100,6 +110,7 @@ export class AppComponent implements OnInit {
     // 1. Filter notes array
     // 2. Remove note dengan id yang match
     console.log('Delete note:', id);
+    this.saveToStorage();
   }
 
   handleEditNote(note: Note): void {
@@ -111,5 +122,9 @@ export class AppComponent implements OnInit {
   handleCancelEdit(): void {
     // TODO: Clear editing state
     this.editingNote = null;
+  }
+
+  private saveToStorage(): void{
+    localStorage.setItem('notes',JSON.stringify(this.notes));
   }
 }
