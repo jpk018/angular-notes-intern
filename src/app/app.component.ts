@@ -31,46 +31,46 @@ export class AppComponent implements OnInit {
   editingNote: Note | null = null;
 
   ngOnInit(): void {
- const savedNotes = localStorage.getItem('notes');
- if (savedNotes) {
-   try {
-     this.notes = JSON.parse(savedNotes);
-   } catch (error) {
-     console.error('Error loading notes:', error);
-   }
- }
- else{
-    const dummyNotes: Note[]=[
-      {
-        id: 1,
-        title:'WORLD CUP FINAL',
-        content:'SPAIN VS ARGENTINA',
-        createdAt:new Date().toISOString()
-      },
-      {
-        id: 2,
-        title:'GOAT OF FOOTBALL',
-        content:'LIONEL ANDREAS MESSI',
-        createdAt:new Date().toISOString()
-      },
-      {
-        id: 3,
-        title:'GOLDEN BOOT WORLD CUP',
-        content:'LIONEL MESSI ',
-        createdAt:new Date().toISOString()
-      },
-      {
-        id:4,
-        title:'GOLDEN BALL WORLD CUP',
-        content:'LIONEL MESSI',
-        createdAt:new Date().toISOString()
-      },
-    ];
-    this.notes=dummyNotes;
-    // TODO: Implement loadNotesFromStorage
-    // Load notes dari localStorage saat component mount
-    // Key: 'notes'
-  }}
+    const savedNotes = localStorage.getItem('notes');
+    if (savedNotes) {
+      try {
+        this.notes = JSON.parse(savedNotes);
+      } catch (error) {
+        console.error('Error loading notes:', error);
+      }
+    } else {
+      const dummyNotes: Note[] = [
+        {
+          id: 1,
+          title: 'WORLD CUP FINAL',
+          content: 'SPAIN VS ARGENTINA',
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: 2,
+          title: 'GOAT OF FOOTBALL',
+          content: 'LIONEL ANDREAS MESSI',
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: 3,
+          title: 'GOLDEN BOOT WORLD CUP',
+          content: 'LIONEL MESSI ',
+          createdAt: new Date().toISOString(),
+        },
+        {
+          id: 4,
+          title: 'GOLDEN BALL WORLD CUP',
+          content: 'LIONEL MESSI',
+          createdAt: new Date().toISOString(),
+        },
+      ];
+      this.notes = dummyNotes;
+      // TODO: Implement loadNotesFromStorage
+      // Load notes dari localStorage saat component mount
+      // Key: 'notes'
+    }
+  }
 
   get filteredNotes(): Note[] {
     return this.notes.filter(
@@ -81,50 +81,39 @@ export class AppComponent implements OnInit {
   }
 
   handleAddNote(formData: { title: string; content: string }): void {
-    if (this.editingNote){
-      this.notes=this.notes.map(note=>this.editingNote!.id===note.id?
-      {...note,title:formData.title,content:formData.content}
-      : note) 
-    }
-    else{
-    const newNote: Note={
-      id: Date.now(),
-      title:formData.title,
-      content:formData.content,
-      createdAt:new Date().toISOString()
-    }
-    this.notes=[newNote,...this.notes]
-    // TODO: Implement add note
-    // 1. Create new note object dengan id unik, title, content, createdAt
-    // 2. Add ke notes array
-    // 3. Clear editingNote jika ada
-    console.log('Add note:', formData);
+    if (this.editingNote) {
+      this.notes = this.notes.map((note) =>
+        this.editingNote!.id === note.id
+          ? { ...note, title: formData.title, content: formData.content }
+          : note
+      );
+    } else {
+      const newNote: Note = {
+        id: Date.now(),
+        title: formData.title,
+        content: formData.content,
+        createdAt: new Date().toISOString(),
+      };
+      this.notes = [newNote, ...this.notes];
     }
     this.editingNote = null;
     this.saveToStorage();
-}
+  }
 
   handleDeleteNote(id: number): void {
-    this.notes=this.notes.filter(note=>note.id!==id)
-    // TODO: Implement delete note
-    // 1. Filter notes array
-    // 2. Remove note dengan id yang match
-    console.log('Delete note:', id);
+    this.notes = this.notes.filter((note) => note.id !== id);
     this.saveToStorage();
   }
 
   handleEditNote(note: Note): void {
-    // TODO: Implement edit note
-    // Set editingNote untuk pre-populate form
     this.editingNote = note;
   }
 
   handleCancelEdit(): void {
-    // TODO: Clear editing state
     this.editingNote = null;
   }
 
-  private saveToStorage(): void{
-    localStorage.setItem('notes',JSON.stringify(this.notes));
+  private saveToStorage(): void {
+    localStorage.setItem('notes', JSON.stringify(this.notes));
   }
 }
